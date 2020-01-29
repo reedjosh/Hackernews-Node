@@ -1,20 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga')
 
-// Define the schema.
-const typeDefs = `
-type Query {
-  info: String!
-  feed: [Link!]!
-}
-
-type Link {
-  id: ID!
-  description: String!
-  url: String!
-}
-`
-
-
+// Temporary dummy data.
 let links = [{
   id: 'link-0',
   url: 'www.howtographql.com',
@@ -27,7 +13,9 @@ const resolvers = {
     feed: () => links
   },
 
-  Link: { // Resolver for link sub-fields.
+  // Resolver for link sub-fields.
+  // Not actually needed. Only here for example.
+  Link: {
     id: (parent) => parent.id,
     description: (parent) => parent.description,
     url: (parent) => parent.url,
@@ -36,7 +24,7 @@ const resolvers = {
 
 // Instantiate the server.
 const server = new GraphQLServer({
-    typeDefs,
+    typeDefs: './src/schema.graphql',
     resolvers,
     }
 )
