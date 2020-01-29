@@ -7,18 +7,23 @@ let links = [{
   description: 'Fullstack tutorial for GraphQL'
 }]
 
+let idCount = links.length // Used for id incrementation.
 const resolvers = {
   Query: { // Query all links.
     info: () => `This is the API of a Hackernews Clone`,
     feed: () => links
   },
 
-  // Resolver for link sub-fields.
-  // Not actually needed. Only here for example.
-  Link: {
-    id: (parent) => parent.id,
-    description: (parent) => parent.description,
-    url: (parent) => parent.url,
+  Mutation: { // Add a link.
+    post: (parent, args) => {
+       const link = {
+        id: `link-${idCount++}`,
+        description: args.description,
+        url: args.url,
+      }
+      links.push(link)
+      return link
+    }
   }
 }
 
